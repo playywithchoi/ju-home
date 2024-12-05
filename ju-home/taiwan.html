@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YJ's HOUSE - 대만</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Korean:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+   html, body {
+    height: 100%;  /* 화면 전체를 채우도록 설정 */
+    margin: 0;     /* 기본 여백 제거 */
+    padding: 0;    /* 기본 패딩 제거 */
+    display: flex;
+    flex-direction: column; /* 콘텐츠가 화면을 꽉 채우도록 설정 */
+}
+
+body {
+    font-family: 'Black Han Sans', sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100%;  /* 화면 전체를 채우도록 설정 */
+    background-color: #f4f4f4;
+    color: #d32f2f;
+    font-size: 18px;
+    position: relative;
+    margin-bottom: 0;  /* 바디 아래쪽 여백 제거 */
+    padding-bottom: 0;  /* 바디 아래쪽 패딩 제거 */
+    display: flex;
+    flex-direction: column; /* 콘텐츠가 화면을 꽉 채우도록 설정 */
+}
+
+header {
+    background-image: url('xmas.jpg');  /* xmas 이미지 배경으로 설정 */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    color: #4CAF50;
+    padding: 60px 20px;
+    text-align: center;
+    height: 100px;
+    z-index: 1;
+}
+
+header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);  /* 투명도를 0.4로 낮춰서 덜 흐릿하게 */
+    z-index: 1;
+}
+header h1 {
+    font-size: 56px;
+    margin: 0;
+    z-index: 2;
+    position: relative;
+    font-weight: 400;  /* 볼드 조정 */
+}
+
+.content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    margin-top: 20px;
+}
+.content h2 {
+    font-size: 36px;
+}
+
+.content p {
+    font-size: 24px;
+    color: #333;
+}
+/* 전체 화면에 별 애니메이션 */
+.stars {
+    position: absolute;  /* 전체 화면에 배치되도록 설정 */
+    top: 0;
+    left: 0;
+    width: 100vw;  /* 화면 너비 전체 */
+    height: 100vh;  /* 화면 높이 전체 */
+    pointer-events: none;  /* 별이 클릭 이벤트를 받지 않도록 설정 */
+    z-index: 9999;  /* 별들이 다른 콘텐츠들 위에 배치되도록 설정 */
+}
+.star {
+    position: absolute;
+    background-color: gold;  /* 황금색 */
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); /* 별 모양 만들기 */
+    opacity: 1;  /* 기본적으로 별이 보이도록 설정 */
+    animation: fallingStars 5s infinite, sparkle 1.5s infinite; /* 하강 속도 늦춤 */
+    z-index: 9999; /* 별이 다른 콘텐츠들 위에 보이도록 설정 */
+    width: 30px;  /* 별 크기 증가 */
+    height: 30px; /* 별 크기 증가 */
+    box-shadow: 0 0 10px 3px rgba(255, 223, 0, 0.8); /* 블러 효과 추가 */
+}
+
+
+
+/* 별이 떨어지는 애니메이션 */
+@keyframes fallingStars {
+    0% {
+        transform: translateY(-800px);  /* 화면 상단에서 시작 */
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh);  /* 화면 하단으로 떨어짐 */
+        opacity: 0;
+    }
+}
+
+/* 별 반짝임 애니메이션 - 블러 효과 제거 */
+@keyframes sparkle {
+    0%, 100% {
+        box-shadow: none;  /* 블러 제거 */
+    }
+    50% {
+        box-shadow: none;  /* 블러 제거 */
+    }
+}
+
+
+.star:nth-child(1) {
+    left: 10%;
+    animation-duration: 5s; /* 하강 속도 늦춤 */
+    animation-delay: 0s;
+    width: 35px;  /* 별 크기 증가 */
+    height: 35px; /* 별 크기 증가 */
+}
+
+.star:nth-child(2) {
+    left: 20%;
+    animation-duration: 5.5s; /* 하강 속도 늦춤 */
+    animation-delay: 0.5s;
+    width: 40px;  /* 별 크기 증가 */
+    height: 40px; /* 별 크기 증가 */
+}
+
+.star:nth-child(3) {
+    left: 30%;
+    animation-duration: 6s; /* 하강 속도 늦춤 */
+    animation-delay: 1s;
+    width: 45px;  /* 별 크기 증가 */
+    height: 45px; /* 별 크기 증가 */
+}
+
+.star:nth-child(4) {
+    left: 40%;
+    animation-duration: 6.5s; /* 하강 속도 늦춤 */
+    animation-delay: 1.5s;
+    width: 50px;  /* 별 크기 증가 */
+    height: 50px; /* 별 크기 증가 */
+}
+
+.star:nth-child(5) {
+    left: 50%;
+    animation-duration: 7s; /* 하강 속도 늦춤 */
+    animation-delay: 2s;
+    width: 55px;  /* 별 크기 증가 */
+    height: 55px; /* 별 크기 증가 */
+}
+
+.star:nth-child(6) {
+    left: 60%;
+    animation-duration: 5.8s; /* 하강 속도 늦춤 */
+    animation-delay: 1.3s;
+    width: 40px;  /* 별 크기 증가 */
+    height: 40px; /* 별 크기 증가 */
+}
+
+.star:nth-child(7) {
+    left: 70%;
+    animation-duration: 6.1s; /* 하강 속도 늦춤 */
+    animation-delay: 0.7s;
+    width: 45px;  /* 별 크기 증가 */
+    height: 45px; /* 별 크기 증가 */
+}
+
+.star:nth-child(8) {
+    left: 80%;
+    animation-duration: 6.4s; /* 하강 속도 늦춤 */
+    animation-delay: 1.2s;
+    width: 35px;  /* 별 크기 증가 */
+    height: 35px; /* 별 크기 증가 */
+}
+
+.star:nth-child(9) {
+    left: 90%;
+    animation-duration: 6.6s; /* 하강 속도 늦춤 */
+    animation-delay: 1.8s;
+    width: 50px;  /* 별 크기 증가 */
+    height: 50px; /* 별 크기 증가 */
+}
+/* 네비게이션 바 위치 수정 */
+/* 네비게이션 바 위치 수정 */
+nav {
+    background-color: #205722;
+    text-align: center;
+    width: 100%;
+    display: flex;
+    justify-content: center;  /* 메뉴 항목들을 수평으로 중앙 정렬 */
+    padding: 0;
+}
+
+nav a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 20px;  /* 메뉴 항목의 상하 패딩, 좌우 간격 조정 */
+    text-decoration: none;
+    font-size: 24px;  /* 기본 글자 크기 */
+}
+
+nav a:hover {
+    background-color: #d32f2f;  /* 레드 */
+    color: white;
+}
+
+/* 'active' 클래스: 현재 메뉴 강조 */
+nav a.active {
+    background-color: #d32f2f;  /* 현재 페이지 강조 색상 */
+    color: white;
+}
+
+/* 메뉴 항목에 대한 링크 스타일 */
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;  /* 메뉴 항목들을 수평으로 배치 */
+    flex-wrap: wrap;  /* 메뉴 항목이 화면에 맞지 않으면 자동으로 줄바꿈 */
+    justify-content: center;  /* 항목들을 가운데 정렬 */
+}
+
+nav ul li {
+    display: inline-block;
+    margin-right: 20px;  /* 메뉴 항목 간 간격 */
+}
+
+nav ul li:last-child {
+    margin-right: 0;  /* 마지막 항목에는 오른쪽 여백을 주지 않음 */
+}
+
+.hero {
+    position: relative;
+    width: 100%;
+    background-image: url('image-path.jpg');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: block; /* hero 영역을 block 레벨로 설정하여 콘텐츠가 그 아래에 배치되도록 */
+    z-index: 1;
+    padding-bottom: 20px; /* 이미지 아래 여백 추가 */
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('white.jpg'); /* 흰색 배경 이미지 */
+    background-size: cover;
+    background-position: center;
+    opacity: 0.3;  /* 투명도 설정 */
+    z-index: -1;  /* 배경 이미지 뒤로 */
+}
+.hero img {
+    width: 80%; /* 이미지 너비를 80%로 설정 (필요에 맞게 조정) */
+    max-width: 100%; /* 이미지가 최대 너비를 넘지 않도록 설정 */
+    height: auto; /* 비율에 맞게 높이 조정 */
+    object-fit: contain;
+    display: block; /* 이미지가 블록처럼 동작하도록 변경 */
+    margin: 0 auto; /* 이미지 가운데 정렬 */
+}
+
+.intro {
+    background-color: #fff;
+    text-align: center;  /* 텍스트 중앙 정렬 */
+    padding: 40px 20px;
+}
+
+.intro h2 {
+    font-size: 48px;  /* 소개 섹션 제목 글씨 크기 키우기 */
+    margin: 0;
+    color: #d32f2f;  /* 레드 */
+}
+
+.intro p {
+    font-size: 22px;  /* 소개 섹션 설명 글씨 크기 키우기 */
+    margin-top: 10px;  /* p 태그 상단 공백 */
+}
+
+.btn {
+    background-color: #4CAF50;  /* 그린 */
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 18px;  /* 버튼 글씨 크기 키우기 */
+}
+
+.btn:hover {
+    background-color: #388e3c;  /* 더 어두운 그린 */
+}
+
+footer {
+    color: white; /* 글씨 색을 흰색으로 설정 */
+    background-color: #205722; /* 배경색을 어두운 색으로 설정 (필요에 맞게 조정) */
+    padding: 20px;
+    text-align: center; /* 텍스트를 가운데 정렬 */
+}
+
+footer a {
+    color: white; /* 푸터 링크도 흰색으로 설정 */
+    text-decoration: none; /* 링크의 밑줄 제거 */
+}
+
+footer a:hover {
+    text-decoration: underline; /* 링크에 마우스를 올렸을 때 밑줄 추가 */
+}
+/* 모바일 화면에서 네비게이션 스타일 조정 */
+@media (max-width: 768px) {
+    nav {
+        padding: 0;
+        width: 100%; /* 네비게이션 바 전체 너비로 설정 */
+        display: flex; /* flexbox로 중앙 정렬 */
+        justify-content: center; /* 메뉴 항목들을 중앙 정렬 */
+    }
+
+    nav ul {
+        display: flex; /* 메뉴 항목들을 가로로 나열 */
+        justify-content: center; /* 중앙 정렬 */
+        padding: 0;
+        margin: 0;
+        list-style: none; /* 불릿 제거 */
+        flex-wrap: nowrap; /* 메뉴 항목들이 한 줄에 나오도록 설정 */
+    }
+
+    nav ul li {
+        display: inline-block;
+        margin: 0 10px; /* 메뉴 항목 간 간격 줄이기 */
+    }
+
+    nav a {
+        display: block; /* 블록 요소로 설정하여 넓이 전체 차지하게 */
+        padding: 10px 15px; /* 패딩 조정 */
+        font-size: 16px; /* 글씨 크기 줄이기 */
+        text-align: center; /* 텍스트 중앙 정렬 */
+        width: auto; /* 메뉴 항목 크기 자동 설정 */
+    }
+
+    /* 네비게이션 바 항목들 hover 상태 */
+    nav a:hover {
+        background-color: #d32f2f;  /* 레드 */
+        color: white;
+        border-radius: 12px; /* 엣지를 둥글게 */
+    }
+
+    /* 네비게이션 바 항목들 active 상태 */
+    nav a.active {
+        background-color: #d32f2f;  /* 현재 페이지 강조 색상 */
+        color: white;
+        border-radius: 12px; /* 엣지를 둥글게 */
+    }
+
+    .hero img {
+        width: 100%; /* 이미지는 화면 너비에 맞게 크기 조정 */
+    }
+
+    .intro h2 {
+        font-size: 32px; /* 제목 크기 줄이기 */
+    }
+
+    .intro p {
+        font-size: 18px; /* 설명 글씨 크기 줄이기 */
+    }
+
+    .content h2 {
+        font-size: 28px; /* '메리크리스마스' 제목 크기 줄이기 */
+    }
+
+    .content p {
+        font-size: 20px; /* 설명 글씨 크기 줄이기 */
+    }
+
+    footer p {
+        font-size: 14px; /* 푸터 글씨 크기 줄이기 */
+    }
+
+    /* 별 크기와 애니메이션 속도 조정 */
+    .star {
+        width: 20px; /* 별 크기 줄이기 */
+        height: 20px; /* 별 크기 줄이기 */
+    }
+}
+.comment-section {
+    text-align: center;  /* 중앙 정렬 */
+    margin-top: 20px;
+}
+
+#comment-form {
+    display: inline-block;  /* 폼을 중앙에 배치 */
+    text-align: left;  /* 입력 필드와 버튼을 좌측 정렬 */
+}
+
+#username, #content {
+    width: 80%;
+    padding: 8px;
+    margin: 10px 0;
+    font-size: 14px;
+    font-family: 'Noto Sans Korean', sans-serif; /* Noto Sans Korean 글꼴 적용 */
+    border-radius: 12px; /* 엣지를 둥글게 */
+}
+
+button {
+    padding: 8px 16px;
+    font-size: 24px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    width: 85%;
+    margin: 10px 0;
+    font-family: 'Black Han Sans', sans-serif; /* Black Han Sans 글꼴 적용 */
+    font-weight: 100; /* 가장 얇은 글씨체로 설정 */
+    border-radius: 12px; /* 엣지를 둥글게 */
+}
+
+button:hover {
+    background-color: #45a049;
+    border-radius: 12px; /* 엣지를 둥글게 */
+}
+
+
+            </style>
+</head>
+<body>
+    <header>
+        <h1>대만</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="index.html">홈</a></li>
+            <li><a href="taiwan.html" class="active">대만</a></li>
+            <li><a href="singapore.html">싱가포르</a></li>
+            <li><a href="turkey.html">튀르키예</a></li>
+        </ul>
+    </nav>
+    <script>
+        // 페이지 로드 시 현재 페이지에 해당하는 메뉴 항목에 'active' 클래스를 추가
+        document.addEventListener("DOMContentLoaded", function() {
+            // 현재 페이지의 URL을 가져와서
+            const currentPage = window.location.pathname;
+            
+            // 모든 네비게이션 링크를 찾고
+            const navLinks = document.querySelectorAll("nav a");
+            
+            // 링크를 순차적으로 확인해서 현재 페이지에 해당하는 링크에 'active' 클래스 추가
+            navLinks.forEach(link => {
+                if (link.getAttribute("href") === currentPage) {
+                    link.classList.add("active");
+                }
+            });
+        });
+    </script>
+    
+  <!-- 메인 이미지 -->
+  <section class="hero">
+    <div class="hero-bg"></div> <!-- 배경을 위한 div 추가 -->
+    <img src="taiwan.jpg" alt="Main Image">
+    <div class="content">
+        <h2>2019년 01월</h2>
+        <p>대만 여행</p>
+        <form id="comment-form">
+            <input type="text" id="username" placeholder="이름" required>
+            <textarea id="content" placeholder="댓글을 입력하세요" required></textarea>
+            <button type="submit">댓글 남기기</button>
+        </form>
+        
+        <div id="comment-list"></div>
+        
+        <script>
+          // 댓글 제출 함수
+document.getElementById('comment-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const username = document.getElementById('username').value;
+    const content = document.getElementById('content').value;
+
+    // 서버로 댓글 전송
+    fetch('/api/comments', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, content })
+    })
+    .then(response => response.json())
+    .then(data => {
+        loadComments();  // 댓글 목록 업데이트
+    })
+    .catch(error => console.error('댓글 전송 실패:', error));  // 오류 처리
+});
+
+// 댓글 목록 불러오기
+function loadComments() {
+    fetch('/api/comments')
+        .then(response => response.json())
+        .then(data => {
+            const commentList = document.getElementById('comment-list');
+            commentList.innerHTML = '';  // 기존 댓글 목록 초기화
+            data.comments.forEach(comment => {
+                const div = document.createElement('div');
+                div.textContent = `${comment.username}: ${comment.content}`;
+                commentList.appendChild(div);
+            });
+        })
+        .catch(error => console.error('댓글 목록 불러오기 실패:', error));  // 오류 처리
+}
+
+// 페이지 로드 시 댓글 목록 불러오기
+window.onload = loadComments;
+
+        </script>
+        
+</section>
+
+    <div class="stars">
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+    </div>
+
+    <!-- 푸터 -->
+    <footer>
+        <p>© 2024 YEON JU CHOI</p>
+    </footer>
+</body>
+</html>
