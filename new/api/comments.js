@@ -1,18 +1,30 @@
-// api/comments.js
-
-let comments = [];  // 댓글을 메모리 상에 저장 (실제 서비스에서는 데이터베이스 사용)
+import fs from 'fs';
+import path from 'path';
 
 export default function handler(req, res) {
+    const commentFilePath = path.join(process.cwd(), 'comments.txt');
+
     if (req.method === 'GET') {
-        // 댓글 목록을 반환
-        res.status(200).json({ comments });
+        try {
+            const data = fs.readFileSync(commentFilePath, 'utf8');
+            const comments = data.split('\n').filter(Boolean).map(line => {
+                const [username, content] = line.split(':');
+                return { username, content };
+            });
+            res.status(200).json({ comments });
+        } catch (error) {
+            res.status(500).json({ error: 'Unable to read comments.' });
+        }
     } else if (req.method === 'POST') {
-        // 댓글 추가
         const { username, content } = req.body;
-        comments.push({ username, content });
-        res.status(201).json({ message: 'Comment added!' });
+        try {
+            fs.appendFileSync(commentFilePath, `${username}:${content}\n`);
+            res.status(200).json({ message: 'Comment added.' });
+        } catch (error) {
+            res.status(500).json({ error: 'Unable to save comment.' });
+        }
     } else {
-        // 다른 HTTP 메소드 처리
-        res.status(405).json({ message: 'Method Not Allowed' });
+        res.setHeader('Allow', ['GET', 'POST']);
+        res.status(405).end(`Method ${req.method} Not Allowed`);
     }
 }
