@@ -1,0 +1,41 @@
+const express = require('express');
+const fs = require('fs');
+const app = express();
+const path = require('path');
+app.use(express.json());  // JSON 형식의 요청을 처리하기 위한 미들웨어
+app.use(express.static('public'));  // 정적 파일 서빙
+
+// 댓글 저장 파일 경로
+const commentFilePath = path.join(__dirname, 'comments');
+
+// 댓글 목록 반환
+app.get('/api/comments', (req, res) => {
+    fs.readFile(commentFilePath, 'utf8', (err, data) => {
+        if (err) {
+            return res.status(500).send('서버 오류');
+        }
+        const comments = data.split('\n').map(line => {
+            const [username, content] = line.split(':');
+            return { username, content };
+        });
+        res.json({ comments });
+    });
+});
+
+// 댓글 저장
+app.post('/api/comments', (req, res) => {
+    const { username, content } = req.body;
+    const filePath = path.join(__dirname, 'comments.txt');
+
+    const comment = `Username: ${username}\nContent: ${content}\n\n`;
+    fs.appendFileSync(filePath, comment);
+
+    res.status(200).json({ message: '댓글이 저장되었습니다.' });
+});
+
+});
+
+const port = 3001;
+app.listen(port, () => {
+    console.log(`서버가 http://localhost:${port}에서 실행 중입니다.`);
+});

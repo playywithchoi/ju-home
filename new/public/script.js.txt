@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>댓글 시스템</title>
+    <script>
+        function postComment(event) {
+            event.preventDefault(); // 기본 폼 제출 방지
+
+            const username = document.querySelector('input[name="username"]').value;
+            const content = document.querySelector('textarea[name="content"]').value;
+
+            fetch('/api/comments', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, content })
+            })
+            .then(response => response.json())
+            .then(data => alert(data.message))
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</head>
+<body>
+    <h1>댓글 시스템</h1>
+    <form onsubmit="postComment(event)">
+        <input type="text" name="username" placeholder="이름" required>
+        <textarea name="content" placeholder="댓글을 입력하세요" required></textarea>
+        <button type="submit">댓글 남기기</button>
+    </form>
+</body>
+</html>
