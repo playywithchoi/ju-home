@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>댓글 시스템</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>댓글 시스템</h1>
+  <form method="POST" action="/api/comments">
+    <input type="text" name="username" placeholder="이름" required>
+    <textarea name="content" placeholder="댓글을 입력하세요" required></textarea>
+    <button type="submit">댓글 남기기</button>
+    </form>
+    <hr>
+   <h2>댓글 목록</h2>
+<ul>
+    {% for comment in comments %}
+        <li>{{ comment.username }}: {{ comment.content }}</li>
+    {% endfor %}
+</ul>
+
+ <script src="{{ url_for('static', filename='script.js') }}"></script>
+   
+</body>
+</html>
+

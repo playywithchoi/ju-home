@@ -1,0 +1,5 @@
+/my-comment-app
+  /api
+    comments.js (또는 comments.py)
+  package.json (Node.js 경우)
+  requirements.txt (Python 경우)
