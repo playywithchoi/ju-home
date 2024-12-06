@@ -1,40 +1,39 @@
-document.getElementById('comment-form').addEventListener('submit', function (e) {
-    e.preventDefault();
+// 댓글 가져오기
+function fetchComments() {
+    fetch('/api/comments')
+        .then(response => response.json())
+        .then(data => {
+            const commentsList = document.getElementById('comments');
+            commentsList.innerHTML = '';
+
+            data.comments.forEach(comment => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `${comment.username}: ${comment.content}`;
+                commentsList.appendChild(listItem);
+            });
+        })
+        .catch(error => console.error('댓글 목록 가져오기 실패:', error));
+}
+
+// 댓글 추가
+function addComment(event) {
+    event.preventDefault();
 
     const username = document.getElementById('username').value;
     const content = document.getElementById('content').value;
 
-    fetch('https://ju-home-qdph1q31g-yeonjus-projects-b2ee6582.vercel.app/api/comments', {
+    fetch('/api/comments', {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ username, content })
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, content }),
     })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(data => {
-        alert(data.message);
-        location.reload();
-    })
-    .catch(error => console.error('댓글 저장 실패:', error));
-});
+        .then(response => response.json())
+        .then(data => {
+            alert(data.message);
+            fetchComments(); // 댓글 목록 갱신
+        })
+        .catch(error => console.error('댓글 저장 실패:', error));
+}
 
-fetch('https://ju-home-qdph1q31g-yeonjus-projects-b2ee6582.vercel.app/api/comments')
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(data => {
-        const commentList = document.getElementById('comments');
-        commentList.innerHTML = data.comments.map(comment =>
-            `<li><strong>${comment.username}:</strong> ${comment.content}</li>`
-        ).join('');
-    })
-    .catch(error => console.error('댓글 목록 가져오기 실패:', error));
+document.getElementById('commentForm').addEventListener('submit', addComment);
+fetchComments();
