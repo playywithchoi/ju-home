@@ -22,28 +22,3 @@ if (process.env.NODE_ENV === 'development') {
   clientPromise = client.connect();
 }
 
-export default async function handler(req, res) {
-  if (req.method === 'POST') {
-    const { comment } = req.body;
-
-    if (!comment) {
-      res.status(400).json({ error: 'Comment is required' });
-      return;
-    }
-
-    try {
-      const client = await clientPromise;
-      const database = client.db('comments'); // 데이터베이스 이름
-      const collection = database.collection('posts'); // 컬렉션 이름
-
-      const result = await collection.insertOne({ comment, createdAt: new Date() });
-      res.status(201).json({ success: true, data: result });
-    } catch (error) {
-      console.error('Database error:', error); // 상세 로그 추가
-      res.status(500).json({ error: 'Failed to save comment' });
-    }
-  } else {
-    res.setHeader('Allow', ['POST']);
-    res.status(405).end(`Method ${req.method} Not Allowed`);
-  }
-}
