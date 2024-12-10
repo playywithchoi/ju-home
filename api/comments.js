@@ -1,6 +1,6 @@
 import { MongoClient } from 'mongodb';
 
-const uri = process.env.MONGODB_URI; // 환경 변수에서 MongoDB URI 가져오기
+const uri = process.env.MONGODB_URI; // MongoDB 환경 변수 URI
 const client = new MongoClient(uri);
 
 export default async function handler(req, res) {
@@ -8,23 +8,22 @@ export default async function handler(req, res) {
     const { username, content } = req.body;
 
     try {
-      console.log('Connecting to MongoDB...');
-      await client.connect(); // MongoDB 연결
-      console.log('Connected successfully to MongoDB.');
+      await client.connect();
+      const database = client.db('comments');
+      const collection = database.collection('posts');
 
-      const database = client.db('comments'); // 데이터베이스 선택
-      const collection = database.collection('posts'); // 컬렉션 선택
-      console.log('Database and collection selected.');
+      const newComment = { username, content, createdAt: new Date() };
+      const result = await collection.insertOne(newComment);
 
-      const newComment = { username, content }; // 댓글 데이터 생성
-      const result = await collection.insertOne(newComment); // 데이터 삽입
-      console.log('Comment inserted:', result);
-
-      res.status(200).json({ message: '댓글이 저장되었습니다.' });
+      console.log("MongoDB insert result:", result); // 디버그 로그
+      res.status(200).json({ message: "댓글이 저장되었습니다." });
     } catch (error) {
-      console.error('MongoDB connection error:', error); // 에러 로깅
-      res.status(500).json({ error: '서버 오류 발생' });
+      console.error("MongoDB 연결 오류:", error); // 오류 처리
+      res.status(500).json({ error: "서버 오류" });
     } finally {
-      console.log('Closing MongoDB connection...');
-      await client.close(); // 연결 종료
-     
+      await client.close();
+    }
+  } else {
+    res.status(405).json({ error: "Method Not Allowed" });
+  }
+}
