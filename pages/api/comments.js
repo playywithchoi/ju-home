@@ -15,16 +15,14 @@ export default async function handler(req, res) {
       const newComment = { username, content };
       await collection.insertOne(newComment);  // 댓글 저장
 
-      res.status(200).json({ message: '댓글이 저장되었습니다.' });
+      res.status(200).json({ message: '댓글이 저장되었습니다.' });  // 세미콜론 추가
     } catch (error) {
-      console.error('서버 오류:', error); // error 변수 활용
-      res.status(500).json({ error: '서버 오류' });
-    }
-    
+      console.error('서버 오류:', error);  // 세미콜론 추가
+      res.status(500).json({ error: '서버 오류' });  // 세미콜론 추가
     } finally {
       await client.close();  // 연결 종료
     }
   } else {
-    res.status(405).json({ error: 'Method Not Allowed' });
+    res.status(405).json({ error: 'Method Not Allowed' });  // 세미콜론 추가
   }
 }
