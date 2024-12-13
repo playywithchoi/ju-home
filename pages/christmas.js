@@ -6,73 +6,81 @@ export default function ChristmasPage() {
   const [comment, setComment] = useState('');
 
   // 댓글 목록 가져오기
-  const fetchComments = async () => {
-    const res = await fetch('/api/comments');
-    const data = await res.json();
-    setComments(data);
-  };
-
   useEffect(() => {
+    const fetchComments = async () => {
+      try {
+        const response = await fetch('/api/comments');
+        const data = await response.json();
+        setComments(data);
+      } catch (error) {
+        console.error('댓글 목록 가져오기 실패:', error);
+      }
+    };
+
     fetchComments();
   }, []);
 
   // 댓글 제출
-  const handleSubmit = async (e) => {
+  const submitComment = async (e) => {
     e.preventDefault();
 
-    if (!name || !comment) {
-      alert('이름과 댓글을 모두 입력해주세요.');
-      return;
-    }
+    const newComment = { name, comment };
 
-    const res = await fetch('/api/comments', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ username: name, content: comment }),
-    });
+    try {
+      const response = await fetch('/api/comments', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newComment),
+      });
 
-    if (res.ok) {
-      setName('');
-      setComment('');
-      fetchComments(); // 댓글 제출 후 목록 갱신
-    } else {
-      alert('댓글 제출에 실패했습니다.');
+      if (response.ok) {
+        const addedComment = await response.json();
+        setComments([...comments, { ...newComment, createdAt: new Date() }]);
+        setName('');
+        setComment('');
+      } else {
+        console.error('댓글 저장 실패');
+      }
+    } catch (error) {
+      console.error('댓글 저장 중 오류:', error);
     }
   };
 
   return (
     <div>
       <h1>크리스마스 페이지</h1>
+
+      {/* 댓글 목록 출력 */}
       <div>
-        <h2>댓글</h2>
+        <h2>댓글 목록</h2>
         <ul>
           {comments.map((comment, index) => (
             <li key={index}>
-              <strong>{comment.username}</strong>: {comment.content}
+              <p><strong>{comment.name}</strong>: {comment.comment}</p>
+              <small>{new Date(comment.createdAt).toLocaleString()}</small>
             </li>
           ))}
         </ul>
       </div>
-      
-      <form onSubmit={handleSubmit}>
-        <div>
-          <input
-            type="text"
-            placeholder="이름"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </div>
-        <div>
-          <textarea
-            placeholder="댓글을 입력하세요"
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-          />
-        </div>
-        <button type="submit">댓글 제출</button>
+
+      {/* 댓글 작성 폼 */}
+      <form onSubmit={submitComment}>
+        <input
+          type="text"
+          placeholder="이름"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+        />
+        <textarea
+          placeholder="댓글을 남겨주세요"
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
+          required
+        />
+        <button type="submit">댓글 작성</button>
       </form>
     </div>
   );
