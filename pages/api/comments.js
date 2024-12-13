@@ -17,7 +17,10 @@ export default async function handler(req, res) {
 
       res.status(200).json({ message: '댓글이 저장되었습니다.' });
     } catch (error) {
+      console.error('서버 오류:', error); // error 변수 활용
       res.status(500).json({ error: '서버 오류' });
+    }
+    
     } finally {
       await client.close();  // 연결 종료
     }
