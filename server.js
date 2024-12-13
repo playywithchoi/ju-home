@@ -55,7 +55,7 @@ app.post('/api/comments', (req, res) => {
 });
 
 // 서버 실행
-const port = 3000;
+const port = 3002;
 app.listen(port, () => {
     console.log(`서버가 http://localhost:${port}에서 실행 중입니다.`);
 });
